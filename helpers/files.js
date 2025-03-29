@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const fn = require('./functions');
 
 class Files {
   constructor(baseDir = path.join(__dirname, '..', 'data')) {
@@ -37,7 +38,7 @@ class Files {
     }
 
     data[name] = value;
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    fs.writeFileSync(filePath, fn.stringifyWithBigInt(data));
     console.log('\nGeniData - Saved to', filePath);
     console.log(name, '=', value, '\n');
   }

@@ -2,10 +2,10 @@ const fs = require('fs');
 const path = require('path');
 
 const files = require('./helpers/files');
-
+const config = require('./config');
+const tokenHelper = require('./helpers/tokens');
 class GeniData {
   constructor() {
-    
   }
 
   setGeniDexAddress(network, address){
@@ -32,7 +32,15 @@ class GeniData {
     console.log('GeniRewarder', files.read(network, 'addresses.json', 'GeniRewarder'))
     return files.read(network, 'addresses.json', 'GeniRewarder');
   }
-  
+
+  getNetworkConfig(){
+    return config.networks;
+  }
+
+  getTokensInfo(network, tokenAddresses){
+    return tokenHelper.getTokensInfo(network, tokenAddresses)
+  }
+
 }
 
 module.exports = new GeniData();
