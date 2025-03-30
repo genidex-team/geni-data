@@ -9,24 +9,15 @@ const ERC20_ABI = [
 ];
 
 class Tokens {
-    async getTokenInfo(network, tokenAddress) {
-        const tokenAddressLC = tokenAddress.toLowerCase();
 
-        // Check if already cached
-        const cached = files.read(network, "tokens.json", tokenAddressLC);
-        if (cached) {
-            console.log(`[Cache] Loaded token info for ${tokenAddress} on ${network}`);
-            return cached;
-        }
-
+    async fetchTokenInfo(network, tokenAddress) {
         const rpcUrl = config.networks[network]?.url;
         if (!rpcUrl) {
             throw new Error(`Missing RPC URL for network: ${network}`);
         }
-
         const provider = new ethers.JsonRpcProvider(rpcUrl);
         const token = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
-
+        const checksumAddress = ethers.getAddress(tokenAddress);
         const [name, symbol, decimals] = await Promise.all([
             token.name(),
             token.symbol(),
@@ -34,24 +25,53 @@ class Tokens {
         ]);
 
         const tokenInfo = {
-            address: tokenAddress,
+            address: checksumAddress,
             name,
             symbol,
             decimals: decimals.toString()
         };
-
-        files.write(network, "tokens.json", tokenAddressLC, tokenInfo);
-        console.log(`[Fetch] Saved token info for ${tokenAddress} on ${network}`);
+        // console.log(`[Fetch] Saved token info for ${tokenAddress} on ${network}`);
         return tokenInfo;
     }
 
-    async getTokensInfo(network, tokenAddresses) {
-        const results = {};
-        for (const address of tokenAddresses) {
-            const info = await this.getTokenInfo(network, address);
-            const addressLC = address.toLowerCase();
-            results[addressLC] = info;
+    async getTokenInfo(network, tokenAddress) {
+        const tokenAddressLC = tokenAddress.toLowerCase();
+        // Check if already cached
+        const cached = files.readKey(network, "tokens.json", tokenAddressLC);
+        if (cached) {
+            // console.log(`[Cache] Loaded token info for ${tokenAddress} on ${network}`);
+            return cached;
+        }else{
+            const tokenInfo = await this.fetchTokenInfo(network, tokenAddress);
+            const tokenAddressLC = tokenAddress.toLowerCase();
+            files.write(network, "tokens.json", tokenAddressLC, tokenInfo);
+            return tokenInfo;
         }
+    }
+
+    async getTokensInfo(network, tokenAddresses) {
+        const data = files.readAll(network, "tokens.json") || {};
+        const results = {};
+        var newTokenCount = 0;
+
+        for (const address of tokenAddresses) {
+            const addressLC = address.toLowerCase();
+            const checksum = ethers.getAddress(address);
+            if (data[addressLC]) {
+                // console.log(`[Cache] Loaded token info for ${checksum}`);
+                results[addressLC] = data[addressLC];
+                continue;
+            }else{
+                const info = await this.fetchTokenInfo(network, address);
+                data[addressLC] = info;
+                results[addressLC] = info;
+                newTokenCount++;
+            }
+        }
+        if(newTokenCount>0){
+            files.overwriteData(network, 'tokens.json', data);
+        }
+
         return results;
     }
 }

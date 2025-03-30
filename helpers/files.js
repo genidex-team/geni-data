@@ -13,7 +13,7 @@ class Files {
     }
   }
 
-  read(network, filename, name) {
+  readKey(network, filename, name) {
     const filePath = path.join(this.baseDir, network, filename);
     if (!fs.existsSync(filePath)) return null;
 
@@ -21,7 +21,16 @@ class Files {
     return data?.[name] || null;
   }
 
-  write(network, filename, name, value) {
+  readAll(network, filename) {
+    console.log(this.baseDir, network, filename);
+    const filePath = path.join(this.baseDir, network, filename);
+    if (!fs.existsSync(filePath)) return null;
+
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    return data;
+  }
+
+  writeKey(network, filename, name, value) {
 
     const dir = path.join(this.baseDir, network);
     this.ensureDirExists(dir);
@@ -42,6 +51,16 @@ class Files {
     console.log('\nGeniData - Saved to', filePath);
     console.log(name, '=', value, '\n');
   }
+
+  overwriteData(network, filename, data){
+    const dir = path.join(this.baseDir, network);
+    this.ensureDirExists(dir);
+    const filePath = path.join(dir, filename);
+
+    fs.writeFileSync(filePath, fn.stringifyWithBigInt(data));
+    console.log('\nGeniData.overwriteData:', filePath);
+  }
+
 }
 
 module.exports = new Files();
