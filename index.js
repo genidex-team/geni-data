@@ -4,8 +4,13 @@ const path = require('path');
 const files = require('./helpers/files');
 const config = require('./config');
 const tokenHelper = require('./helpers/tokens');
+
+const testnetAirdrop = require('./helpers/testnet_airdrop');
+
 class GeniData {
+
   constructor() {
+    this.testnetAirdrop = testnetAirdrop;
   }
 
   setGeniDexAddress(network, address){
@@ -29,7 +34,6 @@ class GeniData {
   }
   
   getGeniRewarder(network){
-    console.log('GeniRewarder', files.readKey(network, 'addresses.json', 'GeniRewarder'))
     return files.readKey(network, 'addresses.json', 'GeniRewarder');
   }
 
@@ -44,6 +48,8 @@ class GeniData {
   getTokensInfo(network, tokenAddresses){
     return tokenHelper.getTokensInfo(network, tokenAddresses)
   }
+
+  
 
 }
 

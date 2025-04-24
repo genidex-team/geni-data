@@ -5,6 +5,9 @@ env.loadEnvFile();
 
 module.exports = {
     networks: {
+        hardhat: {
+            hardfork: "cancun"
+        },
         geni: {
             chainId: 31339,
             url: "https://rpc.genidex.net"

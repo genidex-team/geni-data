@@ -22,7 +22,7 @@ class Files {
   }
 
   readAll(network, filename) {
-    console.log(this.baseDir, network, filename);
+    // console.log(this.baseDir, network, filename);
     const filePath = path.join(this.baseDir, network, filename);
     if (!fs.existsSync(filePath)) return null;
 
@@ -48,8 +48,8 @@ class Files {
 
     data[name] = value;
     fs.writeFileSync(filePath, fn.stringifyWithBigInt(data));
-    console.log('\nGeniData - Saved to', filePath);
-    console.log(name, '=', value, '\n');
+    // console.log('\nGeniData - Saved to', filePath);
+    // console.log(name, '=', value, '\n');
   }
 
   overwriteData(network, filename, data){
