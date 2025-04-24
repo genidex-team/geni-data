@@ -1,0 +1,41 @@
+{
+  "format": "standard-v1",
+  "leafEncoding": [
+    "address",
+    "uint256",
+    "bytes32"
+  ],
+  "tree": [
+    "0x409d97aa2f3dc83be68e173e5c34e795436dd8c4639b8cb3046f84754b224ab6",
+    "0x2ce0aa2a0bdef7bb5d6b94462d13d2938560a08fb92aae05c40f810db386f79b",
+    "0xa3ecd592c10bbbed60607375ee1424195d664f0bd1933cceea01eca32139fed8",
+    "0x7fb45431d7c37ae2e2445d30c2e989f85822606efd1d50491eeeab973160c880",
+    "0x0b272a38f4a65eb8e676f603f82c5f1261c32adbb873434677188feafbe0aea7"
+  ],
+  "values": [
+    {
+      "value": [
+        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+        "100",
+        "0x29c904621d30af8866dce5df0c1f42330135460142da412e3209bf780e2d6b62"
+      ],
+      "treeIndex": 2
+    },
+    {
+      "value": [
+        "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+        "200",
+        "0x1ba8865e0abdcd55fa7b16c1d8403bcd1fe85d18067621df9448a8d4fc67421d"
+      ],
+      "treeIndex": 4
+    },
+    {
+      "value": [
+        "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+        "300",
+        "0xd94f5252e780909cdfe997347886153decc85621d9c549d65997439280ddc7d7"
+      ],
+      "treeIndex": 3
+    }
+  ]
+}
