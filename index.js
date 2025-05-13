@@ -11,6 +11,7 @@ class GeniData {
 
   constructor() {
     this.testnetAirdrop = testnetAirdrop;
+    this.config = config;
   }
 
   setGeniDexAddress(network, address){
