@@ -16,10 +16,35 @@ module.exports = {
             chainId: 11155420,
             url: 'https://sepolia.optimism.io',
             accounts: [
-                env.get('SEPOLIA_PRIVATE_KEY'),
-                '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80', //acount 0 - npx hardhat node
-                '0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d' //acount 1 - npx hardhat node
+                env.get('PRIVATE_KEY_0'),
+                env.get('PRIVATE_KEY_1'),
+                env.get('PRIVATE_KEY_2'),
             ]
-        }
-    }
+        },
+        sepolia: {
+            url: 'https://sepolia.infura.io/v3/' + env.get('INFURA_API_KEY'),
+            accounts: [
+                env.get('PRIVATE_KEY_0'),
+                env.get('PRIVATE_KEY_1'),
+                env.get('PRIVATE_KEY_2'),
+            ]
+        },
+    },
+    etherscan: {
+        apiKey: {
+            op_sepolia: env.get('ETHERSCAN_OP_API_KEY'),
+            sepolia: env.get('ETHERSCAN_API_KEY')
+        },
+        customChains: [
+            {
+              network: "op_sepolia",
+              chainId: 11155420,
+              urls: {
+                apiURL: "https://api-sepolia-optimism.etherscan.io/api",
+                browserURL: "https://sepolia-optimism.etherscan.io/"
+              }
+            }
+          ]
+    },
+    PRIVATE_KEY_0: env.get('PRIVATE_KEY_0')
 }
