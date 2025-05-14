@@ -6,12 +6,14 @@ const config = require('./config');
 const tokenHelper = require('./helpers/tokens');
 
 const testnetAirdrop = require('./helpers/testnet_airdrop');
+const rpc = require('./helpers/rpc');
 
 class GeniData {
 
   constructor() {
     this.testnetAirdrop = testnetAirdrop;
     this.config = config;
+    this.rpc = rpc;
   }
 
   setGeniDexAddress(network, address){

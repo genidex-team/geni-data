@@ -15,6 +15,7 @@ module.exports = {
         op_sepolia: {
             chainId: 11155420,
             url: 'https://sepolia.optimism.io',
+            // url: 'https://optimism-sepolia.infura.io/v3/' + env.get('INFURA_API_KEY'),
             accounts: [
                 env.get('PRIVATE_KEY_0'),
                 env.get('PRIVATE_KEY_1'),
@@ -46,5 +47,9 @@ module.exports = {
             }
           ]
     },
-    PRIVATE_KEY_0: env.get('PRIVATE_KEY_0')
+    privateKeys: [
+        env.get('PRIVATE_KEY_0'),
+        env.get('PRIVATE_KEY_1'),
+        env.get('PRIVATE_KEY_2'),
+    ]
 }
