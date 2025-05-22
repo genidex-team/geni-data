@@ -13,7 +13,7 @@ class TestnetAirdrop {
     }
 
     getRewardsInput() {
-        return files.readAll('testnet_airdrop', 'rewards.input.json');
+        return files.readAll('testnet_airdrop', 'reward.input.json');
     }
 
     getReferralInput() {
@@ -21,7 +21,7 @@ class TestnetAirdrop {
     }
 
     setRewardsInput(data) {
-        files.overwriteData('testnet_airdrop', 'rewards.input.json', data);
+        files.overwriteData('testnet_airdrop', 'reward.input.json', data);
     }
 
     setReferralInput(data) {
@@ -92,14 +92,14 @@ class TestnetAirdrop {
 
     getRewardSalt(address) {
         const tree = StandardMerkleTree.load(this.getRewardTree());
-        var amount;
+        var salt;
         for (const [i, v] of tree.entries()) {
             if (v[0] === address.toLowerCase()) {
-                amount = v[2];
+                salt = v[2];
                 break;
             }
         }
-        return amount;
+        return salt;
     }
 
     getRewardRoot() {

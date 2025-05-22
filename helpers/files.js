@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+const config = require('../config');
 const fn = require('./functions');
 
 class Files {
-  constructor(baseDir = path.join(__dirname, '..', 'data')) {
-    this.baseDir = baseDir;
+  constructor() {
+    this.dataPath = config.dataPath;
   }
 
   ensureDirExists(dirPath) {
@@ -14,7 +15,7 @@ class Files {
   }
 
   readKey(network, filename, name) {
-    const filePath = path.join(this.baseDir, network, filename);
+    const filePath = path.join(this.dataPath, network, filename);
     if (!fs.existsSync(filePath)) return null;
 
     const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -23,7 +24,7 @@ class Files {
 
   readAll(network, filename) {
     // console.log(this.baseDir, network, filename);
-    const filePath = path.join(this.baseDir, network, filename);
+    const filePath = path.join(this.dataPath, network, filename);
     if (!fs.existsSync(filePath)) return null;
 
     const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -32,7 +33,7 @@ class Files {
 
   writeKey(network, filename, name, value) {
 
-    const dir = path.join(this.baseDir, network);
+    const dir = path.join(this.dataPath, network);
     this.ensureDirExists(dir);
     const filePath = path.join(dir, filename);
 
@@ -53,7 +54,7 @@ class Files {
   }
 
   overwriteData(network, filename, data){
-    const dir = path.join(this.baseDir, network);
+    const dir = path.join(this.dataPath, network);
     this.ensureDirExists(dir);
     const filePath = path.join(dir, filename);
 

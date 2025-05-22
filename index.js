@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
+const { hexlify, randomBytes } = require("ethers");
 
+const env = require('./helpers/env');
 const files = require('./helpers/files');
 const config = require('./config');
 const tokenHelper = require('./helpers/tokens');
@@ -9,7 +11,6 @@ const testnetAirdrop = require('./helpers/testnet_airdrop');
 const rpc = require('./helpers/rpc');
 
 class GeniData {
-
   constructor() {
     this.testnetAirdrop = testnetAirdrop;
     this.config = config;
@@ -35,13 +36,45 @@ class GeniData {
   setGeniRewarder(network, address){
     files.writeKey(network, 'addresses.json', 'GeniRewarder', address);
   }
-  
+
   getGeniRewarder(network){
     return files.readKey(network, 'addresses.json', 'GeniRewarder');
   }
 
+  setFactoryAddress(network, address){
+    files.writeKey(network, 'addresses.json', 'Factory', address);
+  }
+
+  setPlaceholderUUPS(network, address){
+    files.writeKey(network, 'addresses.json', 'Placeholder', address);
+  }
+
+  getFactoryAddress(network){
+    return files.readKey(network, 'addresses.json', 'Factory');
+  }
+
+  getPlaceholderUUPS(network){
+    return files.readKey(network, 'addresses.json', 'Placeholder');
+  }
+
+  getTokenSalt(){
+    return config.tokenSalt;
+  }
+
+  randomBytes32(){
+    return hexlify(randomBytes(32));
+  }
+
+  getGeniDexSalt(){
+    return config.geniDexSalt;
+  }
+
   getNetworkConfig(){
     return config.networks;
+  }
+
+  getEtherscanConfig(){
+    return config.etherscan;
   }
 
   getTokenInfo(network, tokenAddress){
@@ -52,7 +85,67 @@ class GeniData {
     return tokenHelper.getTokensInfo(network, tokenAddresses)
   }
 
-  
+  getL1NetworkName(networkName){
+    const devNet = ['hardhat', 'localhost', 'geni'];
+    const testNet = ['sepolia', 'op_sepolia', 'arb_sepolia', 'base_sepolia'];
+    if(this.isTestnet(networkName)){
+      return 'sepolia';
+    }if(this.isDevnet(networkName)){
+      return networkName;
+    }else{
+      return 'ethereum';
+    }
+  }
+
+  isL1Network(networkName){
+    const l1Net = ['hardhat', 'localhost', 'geni', 'sepolia', 'ethereum'];
+    return l1Net.includes(networkName);
+  }
+
+  isDevnet(networkName){
+    const devNet = ['hardhat', 'localhost', 'geni'];
+    return devNet.includes(networkName);
+  }
+
+  isTestnet(networkName){
+    const testNet = ['sepolia', 'op_sepolia', 'arb_sepolia', 'base_sepolia'];
+    return testNet.includes(networkName);
+  }
+
+  isMainnet(networkName){
+    const testNet = ['ethereum', 'arbitrum', 'optimism', 'base'];
+    return testNet.includes(networkName);
+  }
+
+  allowdNetworks(allowdNetworks, networkName){
+    if (!allowdNetworks.includes(networkName)) {
+      throw new Error(`Deployment not allowed on network: ${networkName}`);
+    }
+  }
+
+  getRPC(networkName){
+    return config.networks[networkName].url;
+  }
+
+  getChainId(networkName){
+    return config.networks[networkName].chainId;
+  }
+
+  getTokenName(networkName){
+    return config.networks[networkName].tokenName;
+  }
+
+  getSafeAddress(){
+    return config.safeAddress;
+  }
+
+  getFactoryPrivateKey(){
+    return config.factoryPrivateKey;
+  }
+
+  getProposerPrivateKey(){
+    return config.proposerPrivateKey;
+  }
 
 }
 
