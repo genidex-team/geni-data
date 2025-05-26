@@ -61,12 +61,16 @@ class GeniData {
     return config.tokenSalt;
   }
 
-  randomBytes32(){
-    return hexlify(randomBytes(32));
+  getRewarderSalt(){
+    return config.rewarderSalt;
   }
 
   getGeniDexSalt(){
     return config.geniDexSalt;
+  }
+
+  randomBytes32(){
+    return hexlify(randomBytes(32));
   }
 
   getNetworkConfig(){

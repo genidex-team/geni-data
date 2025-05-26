@@ -21,15 +21,30 @@ module.exports = {
     safeAddress: env.get('SAFE_ADDRESS'),
     tokenSalt: env.get('TOKEN_SALT'),
     geniDexSalt: env.get('GENIDEX_SALT'),
+    rewarderSalt: env.get('REWARDER_SALT'),
     networks: {
         hardhat: {
-            hardfork: "cancun"
+            chainId: 31337,
+            hardfork: "cancun",
+            tokenName: 'GeniToken'
+        },
+        localhost: {
+            chainId: 31337,
+            tokenName: 'GeniToken'
         },
         geni: {
             chainId: 31339,
             url: "https://rpc.genidex.net",
             // accounts: privateKeys,
-            tokenName: 'GeniToken'
+            tokenName: 'GeniToken',
+            tokenRecipient: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+        },
+        sepolia: {
+            chainId: 11155111,
+            url: 'https://sepolia.infura.io/v3/' + env.get('INFURA_API_KEY'),
+            accounts: privateKeys,
+            tokenName: 'GeniToken',
+            tokenRecipient: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
         },
         arb_sepolia: {
             chainId: 421614,
@@ -49,13 +64,7 @@ module.exports = {
             url: 'https://base-sepolia.infura.io/v3/' + env.get('INFURA_API_KEY'),
             accounts: privateKeys,
             tokenName: 'GeniTokenBase'
-        },
-        sepolia: {
-            chainId: 11155111,
-            url: 'https://sepolia.infura.io/v3/' + env.get('INFURA_API_KEY'),
-            accounts: privateKeys,
-            tokenName: 'GeniToken'
-        },
+        }
     },
     etherscan: {
         apiKey: {
