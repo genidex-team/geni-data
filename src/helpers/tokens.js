@@ -44,7 +44,7 @@ class Tokens {
         }else{
             const tokenInfo = await this.fetchTokenInfo(network, tokenAddress);
             const tokenAddressLC = tokenAddress.toLowerCase();
-            files.write(network, "tokens.json", tokenAddressLC, tokenInfo);
+            files.writeKey(network, "tokens.json", tokenAddressLC, tokenInfo);
             return tokenInfo;
         }
     }

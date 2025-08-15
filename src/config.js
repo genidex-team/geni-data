@@ -3,7 +3,7 @@ const path = require('path');
 const env = require('./helpers/env');
 env.loadEnvFile();
 
-const envFile = path.join(__dirname, `.${env.get('NODE_ENV')}.env`);
+const envFile = path.join(__dirname, '..', `.${env.get('NODE_ENV')}.env`);
 env.loadEnvFile(envFile);
 
 const privateKeys = [
@@ -13,8 +13,19 @@ const privateKeys = [
 ];
 // console.log(privateKeys);
 
+function getMembers(key){
+    return env.get(key).split(',').map(item => item.trim());
+}
+
+const roleMembers = {
+    'ADMIN': getMembers('ADMIN_MEMBERS'),
+    'UPGRADER': getMembers('UPGRADER_MEMBERS'),
+    'PAUSER': getMembers('PAUSER_MEMBERS'),
+    'OPERATOR': getMembers('OPERATOR_MEMBERS')
+};
+
 module.exports = {
-    dataPath: path.join(__dirname, 'data', env.get('NODE_ENV')),
+    dataPath: path.join(__dirname, '..', 'data', env.get('NODE_ENV')),
     privateKeys: privateKeys,
     factoryPrivateKey: env.get('FACTORY_PRIVATE_KEY'),
     proposerPrivateKey: env.get('PROPOSER_PRIVATE_KEY'),
@@ -22,6 +33,7 @@ module.exports = {
     tokenSalt: env.get('TOKEN_SALT'),
     geniDexSalt: env.get('GENIDEX_SALT'),
     rewarderSalt: env.get('REWARDER_SALT'),
+    roleMembers: roleMembers,
     networks: {
         hardhat: {
             chainId: 31337,
@@ -30,10 +42,12 @@ module.exports = {
         },
         localhost: {
             chainId: 31337,
-            tokenName: 'GeniToken'
+            url: "http://127.0.0.1:8545",
+            tokenName: 'GeniToken',
         },
         geni: {
-            chainId: 31339,
+            // chainId: 31339,
+            chainId: 1,
             url: "https://rpc.genidex.net",
             // accounts: privateKeys,
             tokenName: 'GeniToken',

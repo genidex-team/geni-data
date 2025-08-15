@@ -1,3 +1,6 @@
 {
-    "SafeAddress": "0x6bEB0144955D1fcd4CeF7Be6e6faa2C568208913"
+    "SafeAddress": "0x6bEB0144955D1fcd4CeF7Be6e6faa2C568208913",
+    "Roles": {
+        "ADMIN": ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"]
+    }
 }

@@ -33,9 +33,9 @@ class Env{
     }
 
     loadDefaultEnv(){
-        var defaultDotEnv = path.join(__dirname, '..', '.env');
+        var defaultDotEnv = path.join(__dirname, '..', '..', '.env');
         if(!fs.existsSync(defaultDotEnv)){
-            defaultDotEnv = path.join(__dirname, '.env');
+            defaultDotEnv = path.join(__dirname, '..', '.env');
         }
         // if(fs.existsSync(defaultDotEnv)){
             const dotenvConfig = dotenv.config({ path: defaultDotEnv });

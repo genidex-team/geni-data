@@ -17,6 +17,14 @@ class GeniData {
     this.rpc = rpc;
   }
 
+  setAccessManagerAddress(network, address){
+    files.writeKey(network, 'addresses.json', 'AccessManager', address);
+  }
+
+  getAccessManagerAddress(network){
+    return files.readKey(network, 'addresses.json', 'AccessManager');
+  }
+
   setGeniDexAddress(network, address){
     files.writeKey(network, 'addresses.json', 'GeniDex', address);
   }
@@ -121,8 +129,8 @@ class GeniData {
     return testNet.includes(networkName);
   }
 
-  allowdNetworks(allowdNetworks, networkName){
-    if (!allowdNetworks.includes(networkName)) {
+  allowedNetworks(allowedNetworks, networkName){
+    if (!allowedNetworks.includes(networkName)) {
       throw new Error(`Deployment not allowed on network: ${networkName}`);
     }
   }
@@ -149,6 +157,10 @@ class GeniData {
 
   getProposerPrivateKey(){
     return config.proposerPrivateKey;
+  }
+
+  getRoleMembers(){
+    return config.roleMembers;
   }
 
 }
